@@ -1,0 +1,17 @@
+# Entorno Python
+venv/
+__pycache__/
+*.pyc
+
+# Salidas de entrenamiento y pesos
+runs/
+*.pt
+*.onnx
+*.tflite
+
+# Artefactos generados
+*.log
+classify_preview.jpg
+
+# macOS
+.DS_Store
