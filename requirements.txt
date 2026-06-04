@@ -1,0 +1,2 @@
+# Detector de placas. ultralytics arrastra torch, opencv-python, numpy y pyyaml.
+ultralytics

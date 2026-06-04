@@ -11,13 +11,18 @@ de moto aun mas robusta como cruce de verificacion.
 import os
 import re
 import glob
+from pathlib import Path
 import cv2
 import numpy as np
+import yaml
 
-DATASET = "/Users/sebas1541/Desktop/Proyecto Placas.v1-primera-version.yolov8"
-TEST_IMAGES = os.path.join(DATASET, "test", "images")
-TEST_LABELS = os.path.join(DATASET, "test", "labels")
-OUT = "/Users/sebas1541/Desktop/placas-col/classify_preview.jpg"
+REPO = Path(__file__).resolve().parent
+
+
+def dataset_root():
+    """Lee la ubicacion del dataset desde data.yaml (clave `path`)."""
+    with open(REPO / "data.yaml") as f:
+        return Path(yaml.safe_load(f)["path"])
 
 # Umbrales de color (OpenCV HSV: H 0-179, S 0-255, V 0-255)
 YELLOW_LO, YELLOW_HI = (15, 70, 70), (45, 255, 255)
@@ -79,13 +84,18 @@ COLORS = {"moto": (0, 165, 255), "particular": (0, 255, 255),
 
 
 def main():
+    root = dataset_root()
+    test_images = root / "test" / "images"
+    test_labels = root / "test" / "labels"
+    out = REPO / "classify_preview.jpg"
+
     tiles, counts = [], {}
-    for p in sorted(glob.glob(os.path.join(TEST_IMAGES, "*"))):
+    for p in sorted(glob.glob(os.path.join(str(test_images), "*"))):
         img = cv2.imread(p)
         if img is None:
             continue
         h, w = img.shape[:2]
-        lbl = os.path.join(TEST_LABELS, os.path.splitext(os.path.basename(p))[0] + ".txt")
+        lbl = os.path.join(str(test_labels), os.path.splitext(os.path.basename(p))[0] + ".txt")
         if not os.path.exists(lbl):
             continue
         with open(lbl) as f:
@@ -107,12 +117,12 @@ def main():
     for i, t in enumerate(tiles):
         r, c = divmod(i, cols)
         grid[r * 256:(r + 1) * 256, c * 256:(c + 1) * 256] = t
-    cv2.imwrite(OUT, grid)
+    cv2.imwrite(str(out), grid)
 
     print("=== Conteo por tipo (solo color, sin OCR) ===")
     for k, v in sorted(counts.items()):
         print(f"  {k}: {v}")
-    print(f"Montage guardado en: {OUT}")
+    print(f"Montage guardado en: {out}")
 
 
 if __name__ == "__main__":

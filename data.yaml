@@ -1,4 +1,7 @@
-path: /Users/sebas1541/Desktop/Proyecto Placas.v1-primera-version.yolov8
+# Ruta absoluta al dataset descargado de Roboflow (formato YOLOv11).
+# Unica fuente de verdad de donde vive el dataset: train.py y los scripts
+# de validacion la leen desde aqui.
+path: /Users/sebas1541/Desktop/Placas Colombia.yolov11
 train: train/images
 val: valid/images
 test: test/images

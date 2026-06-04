@@ -6,15 +6,17 @@ import glob
 import cv2
 import numpy as np
 from ultralytics import YOLO
-from classify_prototype import classify_plate, COLORS
+from classify_prototype import classify_plate, COLORS, dataset_root, REPO
 
-MODEL = "/Users/sebas1541/Desktop/placas-col/runs/placa_detector/weights/best.pt"
-TEST_IMAGES = "/Users/sebas1541/Desktop/Proyecto Placas.v1-primera-version.yolov8/test/images"
-OUT = "/Users/sebas1541/Desktop/placas-col/detect_preview.jpg"
+# Usa los pesos recien entrenados (runs/) si existen; si no, el modelo commiteado.
+_trained = REPO / "runs" / "placa_detector" / "weights" / "best.pt"
+MODEL = _trained if _trained.exists() else REPO / "models" / "placa_detector.pt"
+TEST_IMAGES = dataset_root() / "test" / "images"
+OUT = REPO / "detect_preview.jpg"
 
-model = YOLO(MODEL)
+model = YOLO(str(MODEL))
 tiles, detected = [], 0
-for p in sorted(glob.glob(os.path.join(TEST_IMAGES, "*"))):
+for p in sorted(glob.glob(os.path.join(str(TEST_IMAGES), "*"))):
     img = cv2.imread(p)
     if img is None:
         continue
@@ -35,6 +37,7 @@ grid = np.zeros((rows * 256, cols * 256, 3), dtype=np.uint8)
 for i, t in enumerate(tiles):
     r, c = divmod(i, cols)
     grid[r * 256:(r + 1) * 256, c * 256:(c + 1) * 256] = t
-cv2.imwrite(OUT, grid)
+cv2.imwrite(str(OUT), grid)
+print(f"Modelo: {MODEL}")
 print(f"Imagenes: {len(tiles)} | placas detectadas: {detected}")
 print(f"Montage: {OUT}")
