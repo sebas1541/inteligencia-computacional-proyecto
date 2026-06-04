@@ -44,6 +44,7 @@ El pipeline tiene tres etapas:
 |------|-----------|----------------|
 | Framework de detección | **Ultralytics YOLO** | YOLO11n (modelo *nano*) |
 | Backend de entrenamiento | **PyTorch** | acelerado con **MPS** (Apple Silicon) |
+| Hardware de entrenamiento | **Mac mini M4** | 10‑core CPU · 10‑core GPU |
 | Lenguaje | **Python** | 3.11 |
 | Visión clásica (clasificación) | **OpenCV** | umbrales HSV de color |
 | Exportación a móvil | **TensorFlow Lite** vía `onnx2tf` / `ai-edge-litert` | fp16 y fp32 |
@@ -113,6 +114,9 @@ imagen, sin propuesta de regiones, lo que lo hace muy rápido — ideal para
 
 El entrenamiento se lanza con [`train.py`](train.py) usando transfer learning
 desde los pesos preentrenados `yolo11n.pt`.
+
+**Hardware:** se entrenó en una **Mac mini M4 (10‑core CPU / 10‑core GPU)**,
+usando la GPU integrada vía el backend **MPS** de PyTorch (`device="mps"`).
 
 ### Hiperparámetros (de `runs/placa_detector/args.yaml`)
 
