@@ -12,6 +12,8 @@ runs/
 # Artefactos generados
 *.log
 classify_preview.jpg
+detect_preview.jpg
+calibration_image_sample_data_*.npy
 
 # macOS
 .DS_Store
