@@ -349,8 +349,12 @@ python export_tflite.py
 
 ## 12. Autor y licencia
 
-- **Autor:** Sebastián Cañón Castellanos — proyecto del curso **Inteligencia
-  Computacional**.
+- **Autor principal:** Sebastián Cañón Castellanos (cód. 202127352) —
+  Universidad Pedagógica y Tecnológica de Colombia (UPTC), Tunja.
+- **Coautores:**
+  - Kevin Johann Jiménez Poveda (cód. 202220120) — UPTC, Tunja.
+  - Pedro Eduardo Cruz López (cód. 202128778) — UPTC, Tunja.
+- **Curso:** Inteligencia Computacional — UPTC.
 - **Repos relacionados:**
   - `inteligencia-computacional-proyecto` — este repo (ML).
   - `inteligencia-backend` — API FastAPI (cuentas + historial de placas).
